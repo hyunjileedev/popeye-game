@@ -55,6 +55,12 @@ body {
   font-weight: var(--weight-regular);
   color: var(--color-black);
   white-space: nowrap;
+  transition: transform 300ms ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: scale(1.1);
 }
 
 /* Game */
@@ -64,6 +70,7 @@ body {
 
 /* Main */
 .game__main {
+  position: relative;
   margin-right: 2em;
 }
 
@@ -113,7 +120,27 @@ body {
 
 /* Popup */
 .game__popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  text-align: center;
+  background-color: var(--color-blue);
+}
+
+.game__popup--hidden {
   display: none;
+}
+
+.popup__message {
+  font-size: var(--font-medium);
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-black);
+}
+
+.popup__btn {
+  margin: 0 0.25em 1.25em;
 }
 
 /* State */

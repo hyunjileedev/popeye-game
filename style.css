@@ -1,0 +1,27 @@
+:root {
+  /* Color */
+  -—color-white: #fefefe;
+  -—color-black: #000000;
+  -—color-grey: #ccccd0;
+  -—color-blue: #0069a8;
+  -—color-red: #ec0000;
+  -—color-yellow: #f9ab00;
+
+  /* Font size */
+  --font-large: 2rem;
+  --font-medium: 1.75rem;
+  --font-regular: 1.25rem;
+
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+}

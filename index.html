@@ -24,5 +24,41 @@
     <link rel="stylesheet" href="style.css" />
     <script defer src="main.js"></script>
   </head>
-  <body></body>
+  <body>
+    <section class="game">
+      <main class="game__main">
+        <div class="game__info">
+          <button class="info__play-btn">
+            <i class="fas fa-play"></i> Start
+          </button>
+          <div class="info__timer">
+            <span class="timer__text">00:00</span>
+            <div class="timer__bar">
+              <div class="timer__value"></div>
+            </div>
+          </div>
+        </div>
+        <div class="game__playground">
+          <img src="image/plate.png" alt="plate" />
+        </div>
+        <div class="game__popup">
+          <p class="popup__message">WIN/LOSE</p>
+          <button class="popup__replay-btn">
+            <i class="fas fa-undo"></i>Replay
+          </button>
+          <button class="popup__cancel-btn">
+            <i class="fas fa-times"></i>Cancel
+          </button>
+        </div>
+      </main>
+      <aside class="game__state">
+        <p class="state__title">Popeye the Sailor Man</p>
+        <img
+          src="image/default.png"
+          alt="Popeye default"
+          class="state__default"
+        />
+      </aside>
+    </section>
+  </body>
 </html>

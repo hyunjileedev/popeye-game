@@ -153,12 +153,14 @@ body {
 .game__state {
   display: flex;
   flex-direction: column;
+  text-align: center;
+  width: 23.125rem;
 }
 
 .state__title {
   margin: 0;
   font-size: var(--font-medium);
-  font-weight: var(--weight-semi-bold);
+  font-weight: var(--weight-bold);
   color: var(--color-black);
 }
 
@@ -191,14 +193,14 @@ body {
   height: var(--size-instruction-img);
 }
 
-.instruction__heading {
+.instruction__title {
   margin: 0.5em;
   font-size: var(--font-extra-large);
   font-weight: var(--weight-bold);
   color: var(--color-blue);
 }
 
-.instruction__para {
+.instruction__description {
   margin: 0.5em;
   font-size: var(--font-large);
   font-weight: var(--weight-semi-bold);

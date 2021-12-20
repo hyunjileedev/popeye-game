@@ -1,4 +1,4 @@
-/* Global */
+/* Globalsection */
 :root {
   /* Color */
   --color-white: #fefefe;
@@ -114,6 +114,26 @@ body {
 /* Popup */
 .game__popup {
   display: none;
+}
+
+/* State */
+.game__state {
+  display: flex;
+  flex-direction: column;
+}
+
+.state__title {
+  margin: 0;
+  font-size: var(--font-medium);
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-black);
+}
+
+.state__img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 /* Instruction */

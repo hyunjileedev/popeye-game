@@ -1,11 +1,13 @@
+/* Global */
 :root {
   /* Color */
-  -—color-white: #fefefe;
-  -—color-black: #000000;
-  -—color-grey: #ccccd0;
-  -—color-blue: #0069a8;
-  -—color-red: #ec0000;
-  -—color-yellow: #f9ab00;
+  --color-white: #fefefe;
+  --color-black: #000000;
+  --color-grey: #ccccd0;
+  --color-blue: #0069a8;
+  --color-red: #ec0000;
+  --color-yellow: #f9ab00;
+  --color-brown: #a64801;
 
   /* Font size */
   --font-large: 2rem;
@@ -16,12 +18,105 @@
   --weight-bold: 700;
   --weight-semi-bold: 600;
   --weight-regular: 400;
+
+  /* Border */
+  --border-container: solid 3px var(--color-black);
+  --border-button: solid 2px var(--color-black);
+  --border-radius: 8px;
 }
 
+/* Universal tags */
 * {
   box-sizing: border-box;
 }
 
 body {
   font-family: 'Nunito', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--color-blue);
+}
+
+.container {
+  padding: 2em;
+  background-color: var(--color-white);
+  border: var(--border-container);
+  border-radius: var(--border-radius);
+}
+
+.btn {
+  padding: 0.5em;
+  background-color: var(--color-yellow);
+  border: var(--border-button);
+  border-radius: var(--border-radius);
+  font-size: var(--font-regular);
+  font-weight: var(--weight-regular);
+  color: var(--color-black);
+  white-space: nowrap;
+}
+
+/* Game */
+.game {
+  display: flex;
+}
+
+/* Main */
+.game__main {
+  margin-right: 2em;
+}
+
+/* Info */
+.game__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  margin-bottom: 1em;
+  background-color: whitesmoke;
+}
+
+/* Timer */
+.info__timer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75em;
+  margin-left: 1em;
+  background-color: var(--color-grey);
+}
+
+.timer__text {
+  margin-right: 0.5em;
+  font-size: var(--font-regular);
+  font-weight: var(--weight-regular);
+  color: var(--color-black);
+}
+
+.timer__bar {
+  width: 100%;
+  height: 1.25rem;
+  background-color: var(--color-white);
+}
+
+.timer__value {
+  width: 80%;
+  height: 1.25rem;
+  background-color: var(--color-red);
+}
+
+/* Playground */
+.game__playground {
+  background-color: var(--color-brown);
+}
+
+/* Popup */
+.game__popup {
+  display: none;
+}
+
+/* Instruction */
+.instruction {
+  display: none;
 }

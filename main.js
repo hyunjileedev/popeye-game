@@ -7,11 +7,14 @@ const playground = document.querySelector('.game__playground');
 const playgroundRect = playground.getBoundingClientRect();
 const plate = document.querySelector('.playground__plate');
 const plateRect = plate.getBoundingClientRect();
+const stateImg = document.querySelector('.state__img');
+const stateDefault = document.querySelector('.state__default');
 
-let counter;
+const spinachNum = 3;
+let counter = spinachNum;
 
 infoBtn.addEventListener('click', () => {
-  startGame(10, 10, 10);
+  startGame(10, 3, 10);
 });
 
 function startGame(timeLimitInSecs, spinachNum, poisonNum) {
@@ -75,7 +78,7 @@ function createItem(itemName) {
 
   const item = document.createElement('img');
   item.setAttribute('src', `image/${itemName}.png`);
-  item.setAttribute('class', 'playground__item');
+  item.setAttribute('class', `playground__item ${itemName}`);
   item.style.position = 'absolute';
   item.style.top = `${y}px`;
   item.style.left = `${x}px`;
@@ -85,4 +88,35 @@ function createItem(itemName) {
 function random(min, max) {
   const num = Math.floor(Math.random() * (max - min + 1)) + min;
   return num;
+}
+
+playground.addEventListener('click', e => {
+  const target = e.target;
+  if (!target.matches('.playground__item')) {
+    return;
+  }
+  if (target.matches('.spinach')) {
+    onSpinachClick(target);
+  } else {
+    onPoisonClick();
+  }
+});
+
+function onSpinachClick(target) {
+  target.remove();
+  counter--;
+  stateDefault.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
+  if (counter === 0) {
+    console.log('I am FULL!!!');
+    changeStateImg('win');
+  }
+}
+
+function onPoisonClick() {
+  console.log('I am deadX(');
+  changeStateImg('lose');
+}
+
+function changeStateImg(state) {
+  stateImg.innerHTML = `<img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />`;
 }

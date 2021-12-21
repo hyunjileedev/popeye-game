@@ -28,6 +28,9 @@
 
   /* Size */
   --size-instruction-img: 12.5rem;
+
+  /* Animation duration */
+  --animation-duration: 300ms;
 }
 
 /* Universal tags */
@@ -61,7 +64,7 @@ body {
   font-weight: var(--weight-regular);
   color: var(--color-black);
   white-space: nowrap;
-  transition: transform 300ms ease;
+  transition: transform var(--animation-duration) ease;
   cursor: pointer;
 }
 
@@ -114,14 +117,23 @@ body {
 }
 
 .timer__value {
-  width: 80%;
+  width: 0%;
   height: 1.25rem;
   background-color: var(--color-red);
 }
 
 /* Playground */
 .game__playground {
+  position: relative;
   background-color: var(--color-brown);
+}
+
+.playground__item {
+  transition: transform var(--animation-duration) ease;
+}
+
+.playground__item:hover {
+  transform: scale(1.1);
 }
 
 /* Popup */

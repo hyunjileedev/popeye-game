@@ -93,6 +93,16 @@ body {
   background-color: whitesmoke;
 }
 
+.info__btn:disabled {
+  background-color: var(--color-grey);
+  opacity: 0.7;
+}
+
+.info__btn:disabled:hover {
+  transform: none;
+  cursor: default;
+}
+
 /* Timer */
 .info__timer {
   display: flex;

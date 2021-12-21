@@ -9,23 +9,39 @@ const plate = document.querySelector('.playground__plate');
 const plateRect = plate.getBoundingClientRect();
 const stateImg = document.querySelector('.state__img');
 const stateDefault = document.querySelector('.state__default');
+const popup = document.querySelector('.game__popup');
+const popupMsg = document.querySelector('.popup__message');
 
+let isPlaying = false;
 const spinachNum = 3;
+let timer;
 let counter = spinachNum;
 
-infoBtn.addEventListener('click', () => {
-  startGame(10, 3, 10);
-});
+infoBtn.addEventListener('click', () =>
+  !isPlaying ? startGame(10, 3, 10) : stopGame('replay')
+);
 
 function startGame(timeLimitInSecs, spinachNum, poisonNum) {
+  isPlaying = true;
   changeInfoBtn();
   startTimer(timeLimitInSecs);
   setCounter(spinachNum);
   setPlayground(spinachNum, poisonNum);
 }
 
+function stopGame(result) {
+  isPlaying = false;
+  disableInfoBtn();
+  stopTimer();
+  showPopupWithMsg(result);
+}
+
 function changeInfoBtn() {
   infoBtn.innerHTML = `<i class="fas fa-stop"></i> Stop`;
+}
+
+function disableInfoBtn() {
+  infoBtn.setAttribute('disabled', 'true');
 }
 
 function startTimer(timeLimitInSecs) {
@@ -33,7 +49,7 @@ function startTimer(timeLimitInSecs) {
   timerText.textContent = formatTime(remainingSecs);
   timerValue.style.width = `calc(${remainingSecs} / ${timeLimitInSecs} * 100%)`;
 
-  const timer = setInterval(() => {
+  timer = setInterval(() => {
     timerText.textContent = formatTime(--remainingSecs);
     timerValue.style.width = `calc(${remainingSecs} / ${timeLimitInSecs} * 100%)`;
     if (remainingSecs === 0) {
@@ -48,6 +64,10 @@ function formatTime(timeInSecs) {
   const formatedMins = mins < 10 ? `0${mins}` : mins;
   const formatedSecs = secs < 10 ? `0${secs}` : secs;
   return `${formatedMins}:${formatedSecs}`;
+}
+
+function stopTimer() {
+  clearTimeout(timer);
 }
 
 function setCounter(spinachNum) {
@@ -90,11 +110,35 @@ function random(min, max) {
   return num;
 }
 
+function showPopupWithMsg(result) {
+  let msg;
+  switch (result) {
+    case 'win':
+      msg = 'I GOT STRONG 💪';
+      break;
+    case 'lose':
+      msg = 'I am dead 👻';
+      break;
+    case 'replay':
+      msg = 'Wanna replay?';
+      break;
+    default:
+      throw new Error('not handled result');
+  }
+  popupMsg.textContent = msg;
+  popup.classList.remove('game__popup--hidden');
+}
+
 playground.addEventListener('click', e => {
+  if (!isPlaying) {
+    return;
+  }
+
   const target = e.target;
   if (!target.matches('.playground__item')) {
     return;
   }
+
   if (target.matches('.spinach')) {
     onSpinachClick(target);
   } else {
@@ -107,16 +151,16 @@ function onSpinachClick(target) {
   counter--;
   stateDefault.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
   if (counter === 0) {
-    console.log('I am FULL!!!');
-    changeStateImg('win');
+    stopGame('win');
+    updateStateImg('win');
   }
 }
 
 function onPoisonClick() {
-  console.log('I am deadX(');
-  changeStateImg('lose');
+  stopGame('lose');
+  updateStateImg('lose');
 }
 
-function changeStateImg(state) {
+function updateStateImg(state) {
   stateImg.innerHTML = `<img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />`;
 }

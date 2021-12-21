@@ -6,7 +6,6 @@ const timerValue = document.querySelector('.timer__value');
 const playground = document.querySelector('.game__playground');
 const playgroundRect = playground.getBoundingClientRect();
 const plate = document.querySelector('.playground__plate');
-const plateRect = plate.getBoundingClientRect();
 const stateImg = document.querySelector('.state__img');
 const stateDefault = document.querySelector('.state__default');
 const popup = document.querySelector('.game__popup');
@@ -25,14 +24,15 @@ function startGame(timeLimitInSecs, spinachNum, poisonNum) {
   isPlaying = true;
   changeInfoBtn();
   startTimer(timeLimitInSecs);
-  setCounter(spinachNum);
-  setPlayground(spinachNum, poisonNum);
+  initCounter();
+  initPlayground(spinachNum, poisonNum);
 }
 
 function stopGame(result) {
   isPlaying = false;
   disableInfoBtn();
   stopTimer();
+  updateStateImg(result);
   showPopupWithMsg(result);
 }
 
@@ -70,23 +70,24 @@ function stopTimer() {
   clearTimeout(timer);
 }
 
-function setCounter(spinachNum) {
+function initCounter() {
   counter = spinachNum;
 }
 
-function setPlayground(spinachNum, poisonNum) {
+function initPlayground(spinachNum, poisonNum) {
   displayItems('spinach', spinachNum);
   displayItems('poison', poisonNum);
 }
 
 function displayItems(itemName, itemNum) {
+  const plateRect = plate.getBoundingClientRect();
   for (let i = 0; i < itemNum; i++) {
-    const item = createItem(itemName);
+    const item = createItem(itemName, plateRect);
     playground.appendChild(item);
   }
 }
 
-function createItem(itemName) {
+function createItem(itemName, plateRect) {
   const x = random(
     plateRect.left - playgroundRect.left,
     plateRect.right - playgroundRect.left - 50
@@ -139,11 +140,7 @@ playground.addEventListener('click', e => {
     return;
   }
 
-  if (target.matches('.spinach')) {
-    onSpinachClick(target);
-  } else {
-    onPoisonClick();
-  }
+  target.matches('.spinach') ? onSpinachClick(target) : stopGame('lose');
 });
 
 function onSpinachClick(target) {
@@ -152,15 +149,14 @@ function onSpinachClick(target) {
   stateDefault.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
   if (counter === 0) {
     stopGame('win');
-    updateStateImg('win');
   }
 }
 
-function onPoisonClick() {
-  stopGame('lose');
-  updateStateImg('lose');
-}
-
 function updateStateImg(state) {
-  stateImg.innerHTML = `<img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />`;
+  if (state === 'replay') {
+    return;
+  }
+  stateImg.innerHTML = `
+  <img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />
+  `;
 }

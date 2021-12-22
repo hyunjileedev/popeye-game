@@ -56,6 +56,9 @@ function startTimer(timeLimitInSecs) {
     timerValue.style.width = `calc(${remainingSecs} / ${timeLimitInSecs} * 100%)`;
     if (remainingSecs === 0) {
       clearTimeout(timer);
+      if (counter !== 0) {
+        stopGame('lose');
+      }
     }
   }, 1000);
 }
@@ -74,6 +77,15 @@ function stopTimer() {
 
 function initCounter() {
   counter = spinachNum;
+}
+
+function updateStateImg(state) {
+  if (state === 'replay') {
+    return;
+  }
+  stateImg.innerHTML = `
+  <img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />
+  `;
 }
 
 function initPlayground(spinachNum, poisonNum) {
@@ -152,15 +164,6 @@ function onSpinachClick(target) {
   if (counter === 0) {
     stopGame('win');
   }
-}
-
-function updateStateImg(state) {
-  if (state === 'replay') {
-    return;
-  }
-  stateImg.innerHTML = `
-  <img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />
-  `;
 }
 
 replayBtn.addEventListener('click', () => {

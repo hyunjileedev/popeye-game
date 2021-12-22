@@ -4,7 +4,6 @@ const infoBtn = document.querySelector('.info__btn');
 const timerText = document.querySelector('.timer__text');
 const timerValue = document.querySelector('.timer__value');
 const playground = document.querySelector('.game__playground');
-const playgroundRect = playground.getBoundingClientRect();
 const plate = document.querySelector('.playground__plate');
 const stateImg = document.querySelector('.state__img');
 const stateDefault = document.querySelector('.state__default');
@@ -17,10 +16,18 @@ let isPlaying = false;
 const spinachNum = 3;
 let timer;
 let counter = spinachNum;
+let playgroundRect;
+let plateRect;
 
-infoBtn.addEventListener('click', () =>
-  !isPlaying ? startGame(10, 3, 10) : stopGame('replay')
-);
+// To guarantee correct DOMRect
+addEventListener('load', () => {
+  plateRect = plate.getBoundingClientRect();
+  playgroundRect = playground.getBoundingClientRect();
+
+  infoBtn.addEventListener('click', () =>
+    !isPlaying ? startGame(10, 3, 10) : stopGame('replay')
+  );
+});
 
 function startGame(timeLimitInSecs, spinachNum, poisonNum) {
   isPlaying = true;
@@ -94,14 +101,13 @@ function initPlayground(spinachNum, poisonNum) {
 }
 
 function displayItems(itemName, itemNum) {
-  const plateRect = plate.getBoundingClientRect();
   for (let i = 0; i < itemNum; i++) {
-    const item = createItem(itemName, plateRect);
+    const item = createItem(itemName);
     playground.appendChild(item);
   }
 }
 
-function createItem(itemName, plateRect) {
+function createItem(itemName) {
   const x = random(
     plateRect.left - playgroundRect.left,
     plateRect.right - playgroundRect.left - 50

@@ -6,7 +6,7 @@ const timerValue = document.querySelector('.timer__value');
 const playground = document.querySelector('.game__playground');
 const plate = document.querySelector('.playground__plate');
 const stateImg = document.querySelector('.state__img');
-const stateDefault = document.querySelector('.state__default');
+const statePopeye = document.querySelector('.state__popeye');
 const popup = document.querySelector('.game__popup');
 const popupMsg = document.querySelector('.popup__message');
 const replayBtn = document.querySelector('.popup__replay-btn');
@@ -90,9 +90,10 @@ function updateStateImg(state) {
   if (state === 'replay') {
     return;
   }
-  stateImg.innerHTML = `
-  <img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />
-  `;
+  statePopeye.setAttribute('src', `image/${state}.png`);
+  statePopeye.setAttribute('alt', `Popeye ${state}`);
+  statePopeye.classList.remove('state__default');
+  statePopeye.removeAttribute('style');
 }
 
 function initPlayground(spinachNum, poisonNum) {
@@ -166,7 +167,7 @@ playground.addEventListener('click', e => {
 function onSpinachClick(target) {
   target.remove();
   counter--;
-  stateDefault.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
+  statePopeye.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
   if (counter === 0) {
     stopGame('win');
   }
@@ -196,9 +197,9 @@ function resetTimer() {
 }
 
 function resetStateImg() {
-  stateImg.innerHTML = `
-  <img src="image/default.png" alt="Popeye default" class="state__default" />
-  `;
+  statePopeye.setAttribute('src', 'image/default.png');
+  statePopeye.setAttribute('alt', 'Popeye default');
+  statePopeye.classList.add('state__default');
 }
 
 function resetPlayground() {

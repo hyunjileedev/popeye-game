@@ -10,6 +10,8 @@ const stateImg = document.querySelector('.state__img');
 const stateDefault = document.querySelector('.state__default');
 const popup = document.querySelector('.game__popup');
 const popupMsg = document.querySelector('.popup__message');
+const replayBtn = document.querySelector('.popup__replay-btn');
+const cancelBtn = document.querySelector('.popup__cancel-btn');
 
 let isPlaying = false;
 const spinachNum = 3;
@@ -22,7 +24,7 @@ infoBtn.addEventListener('click', () =>
 
 function startGame(timeLimitInSecs, spinachNum, poisonNum) {
   isPlaying = true;
-  changeInfoBtn();
+  changeInfoBtn('stop');
   startTimer(timeLimitInSecs);
   initCounter();
   initPlayground(spinachNum, poisonNum);
@@ -36,12 +38,12 @@ function stopGame(result) {
   showPopupWithMsg(result);
 }
 
-function changeInfoBtn() {
-  infoBtn.innerHTML = `<i class="fas fa-stop"></i> Stop`;
+function changeInfoBtn(type) {
+  infoBtn.innerHTML = `<i class="fas fa-${type}"></i> ${type}`;
 }
 
 function disableInfoBtn() {
-  infoBtn.setAttribute('disabled', 'true');
+  infoBtn.setAttribute('disabled', '');
 }
 
 function startTimer(timeLimitInSecs) {
@@ -160,3 +162,46 @@ function updateStateImg(state) {
   <img src="image/${state}.png" alt="Popeye ${state}" class="state__popeye" />
   `;
 }
+
+replayBtn.addEventListener('click', () => {
+  resetGame();
+  startGame(10, 3, 10);
+});
+
+function resetGame() {
+  resetInfoBtn();
+  resetTimer();
+  resetStateImg();
+  resetPlayground();
+  hidePopup();
+}
+
+function resetInfoBtn() {
+  infoBtn.removeAttribute('disabled');
+  changeInfoBtn('play');
+}
+
+function resetTimer() {
+  timerText.textContent = '00:00';
+  timerValue.style.width = '0';
+}
+
+function resetStateImg() {
+  stateImg.innerHTML = `
+  <img src="image/default.png" alt="Popeye default" class="state__default" />
+  `;
+}
+
+function resetPlayground() {
+  playground.innerHTML = `
+  <img src="image/plate.png" alt="plate" class="playground__plate" />
+  `;
+}
+
+function hidePopup() {
+  popup.classList.add('game__popup--hidden');
+}
+
+cancelBtn.addEventListener('click', () => {
+  resetGame();
+});

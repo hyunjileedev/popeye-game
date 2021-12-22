@@ -93,6 +93,10 @@ body {
   background-color: whitesmoke;
 }
 
+.info__btn {
+  text-transform: capitalize;
+}
+
 .info__btn:disabled {
   background-color: var(--color-grey);
   opacity: 0.7;

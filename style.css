@@ -175,6 +175,10 @@ body {
   margin: 0 0.25em 1.25em;
 }
 
+.popup__btn--hidden {
+  display: none;
+}
+
 /* State */
 .game__state {
   display: flex;

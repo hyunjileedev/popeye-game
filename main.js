@@ -9,12 +9,18 @@ const stateImg = document.querySelector('.state__img');
 const statePopeye = document.querySelector('.state__popeye');
 const popup = document.querySelector('.game__popup');
 const popupMsg = document.querySelector('.popup__message');
+const nextBtn = document.querySelector('.popup__next-btn');
 const replayBtn = document.querySelector('.popup__replay-btn');
 const cancelBtn = document.querySelector('.popup__cancel-btn');
 const instruction = document.querySelector('.instruction');
 
+const timeLimit = 10;
+const multiple = 5;
+let stage = 1;
+let spinachNum = stage * multiple;
+let poisonNum = stage * multiple;
+
 let isPlaying = false;
-const spinachNum = 3;
 let timer;
 let counter = spinachNum;
 let playgroundRect;
@@ -32,16 +38,16 @@ addEventListener('load', () => {
   playgroundRect = playground.getBoundingClientRect();
 
   infoBtn.addEventListener('click', () =>
-    !isPlaying ? startGame(10, 3, 10) : stopGame('replay')
+    !isPlaying ? startGame(timeLimit) : stopGame('replay')
   );
 });
 
-function startGame(timeLimitInSecs, spinachNum, poisonNum) {
+function startGame(timeLimitInSecs) {
   isPlaying = true;
   changeInfoBtn('stop');
   startTimer(timeLimitInSecs);
   initCounter();
-  initPlayground(spinachNum, poisonNum);
+  initPlayground();
   bgm.play();
 }
 
@@ -105,7 +111,7 @@ function updateStateImg(state) {
   statePopeye.removeAttribute('style');
 }
 
-function initPlayground(spinachNum, poisonNum) {
+function initPlayground() {
   displayItems('spinach', spinachNum);
   displayItems('poison', poisonNum);
 }
@@ -147,20 +153,37 @@ function showPopupWithMsg(result) {
     case 'win':
       winSound.play();
       msg = 'I GOT STRONG 💪';
+      changePopupBtn();
       break;
     case 'lose':
       loseSound.play();
       msg = 'I am dead 👻';
+      showReplayBtn();
       break;
     case 'replay':
       replaySound.play();
       msg = 'Wanna replay?';
+      showReplayBtn();
       break;
     default:
       throw new Error('not handled result');
   }
   popupMsg.textContent = msg;
   popup.classList.remove('game__popup--hidden');
+}
+
+function changePopupBtn() {
+  stage === 1 || stage === 2 ? showNextBtn() : showReplayBtn();
+}
+
+function showNextBtn() {
+  replayBtn.classList.add('popup__btn--hidden');
+  nextBtn.classList.remove('popup__btn--hidden');
+}
+
+function showReplayBtn() {
+  replayBtn.classList.remove('popup__btn--hidden');
+  nextBtn.classList.add('popup__btn--hidden');
 }
 
 playground.addEventListener('click', e => {
@@ -187,10 +210,32 @@ function onSpinachClick(target) {
   }
 }
 
-replayBtn.addEventListener('click', () => {
+nextBtn.addEventListener('click', () => {
+  updateGameSetting();
   resetGame();
-  startGame(10, 3, 10);
+  startGame(timeLimit);
 });
+
+replayBtn.addEventListener('click', () => {
+  resetGameSetting();
+  resetGame();
+  startGame(timeLimit);
+});
+
+cancelBtn.addEventListener('click', () => {
+  resetGameSetting();
+  resetGame();
+  showInstruction();
+});
+
+function updateGameSetting() {
+  spinachNum = poisonNum = ++stage * multiple;
+}
+
+function resetGameSetting() {
+  stage = 1;
+  spinachNum = poisonNum = stage * multiple;
+}
 
 function resetGame() {
   resetInfoBtn();
@@ -225,11 +270,6 @@ function resetPlayground() {
 function hidePopup() {
   popup.classList.add('game__popup--hidden');
 }
-
-cancelBtn.addEventListener('click', () => {
-  resetGame();
-  showInstruction();
-});
 
 instruction.addEventListener('click', () => {
   hideInstruction();

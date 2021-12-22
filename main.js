@@ -11,6 +11,7 @@ const popup = document.querySelector('.game__popup');
 const popupMsg = document.querySelector('.popup__message');
 const replayBtn = document.querySelector('.popup__replay-btn');
 const cancelBtn = document.querySelector('.popup__cancel-btn');
+const instruction = document.querySelector('.instruction');
 
 let isPlaying = false;
 const spinachNum = 3;
@@ -227,4 +228,17 @@ function hidePopup() {
 
 cancelBtn.addEventListener('click', () => {
   resetGame();
+  showInstruction();
 });
+
+instruction.addEventListener('click', () => {
+  hideInstruction();
+});
+
+function showInstruction() {
+  instruction.classList.remove('instruction--hidden');
+}
+
+function hideInstruction() {
+  instruction.classList.add('instruction--hidden');
+}

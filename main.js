@@ -19,6 +19,12 @@ let counter = spinachNum;
 let playgroundRect;
 let plateRect;
 
+const spinachSound = new Audio('sound/spinach.wav');
+const winSound = new Audio('sound/win.wav');
+const loseSound = new Audio('sound/lose.wav');
+const replaySound = new Audio('sound/replay.wav');
+const bgm = new Audio('sound/bgm.m4a');
+
 // To guarantee correct DOMRect
 addEventListener('load', () => {
   plateRect = plate.getBoundingClientRect();
@@ -35,6 +41,7 @@ function startGame(timeLimitInSecs, spinachNum, poisonNum) {
   startTimer(timeLimitInSecs);
   initCounter();
   initPlayground(spinachNum, poisonNum);
+  bgm.play();
 }
 
 function stopGame(result) {
@@ -43,6 +50,7 @@ function stopGame(result) {
   stopTimer();
   updateStateImg(result);
   showPopupWithMsg(result);
+  bgm.pause();
 }
 
 function changeInfoBtn(type) {
@@ -136,12 +144,15 @@ function showPopupWithMsg(result) {
   let msg;
   switch (result) {
     case 'win':
+      winSound.play();
       msg = 'I GOT STRONG 💪';
       break;
     case 'lose':
+      loseSound.play();
       msg = 'I am dead 👻';
       break;
     case 'replay':
+      replaySound.play();
       msg = 'Wanna replay?';
       break;
     default:
@@ -165,6 +176,8 @@ playground.addEventListener('click', e => {
 });
 
 function onSpinachClick(target) {
+  spinachSound.currentTime = 0;
+  spinachSound.play();
   target.remove();
   counter--;
   statePopeye.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;

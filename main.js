@@ -121,6 +121,10 @@ function updateStateImg(state) {
   statePopeye.removeAttribute('style');
 }
 
+function scaleStateImg(spinachNum, counter) {
+  statePopeye.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
+}
+
 function initPlayground() {
   displayItems('spinach', spinachNum);
   displayItems('poison', poisonNum);
@@ -214,7 +218,7 @@ function onSpinachClick(target) {
   spinachSound.play();
   target.remove();
   counter--;
-  statePopeye.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
+  scaleStateImg(spinachNum, counter);
   if (counter === 0) {
     stopGame('win');
   }

@@ -42,6 +42,8 @@ addEventListener('load', () => {
   );
 });
 
+playground.addEventListener('click', onPlaygroundClick);
+
 function startGame(timeLimitInSecs) {
   isPlaying = true;
   changeInfoBtn('stop');
@@ -194,7 +196,7 @@ function showReplayBtn() {
   nextBtn.classList.add('popup__btn--hidden');
 }
 
-playground.addEventListener('click', e => {
+function onPlaygroundClick(e) {
   if (!isPlaying) {
     return;
   }
@@ -205,7 +207,7 @@ playground.addEventListener('click', e => {
   }
 
   target.matches('.spinach') ? onSpinachClick(target) : stopGame('lose');
-});
+}
 
 function onSpinachClick(target) {
   spinachSound.currentTime = 0;

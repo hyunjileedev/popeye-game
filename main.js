@@ -50,7 +50,7 @@ function startGame(timeLimitInSecs) {
   startTimer(timeLimitInSecs);
   initCounter();
   initPlayground();
-  bgm.play();
+  playSound(bgm);
 }
 
 function stopGame(result) {
@@ -59,7 +59,7 @@ function stopGame(result) {
   stopTimer();
   updateStateImg(result);
   showPopupWithMsg(result);
-  bgm.pause();
+  pauseSound(bgm);
 }
 
 function changeInfoBtn(type) {
@@ -165,17 +165,17 @@ function showPopupWithMsg(result) {
   let msg;
   switch (result) {
     case 'win':
-      winSound.play();
+      playSound(winSound);
       msg = 'I GOT STRONG 💪';
       changePopupBtn();
       break;
     case 'lose':
-      loseSound.play();
+      playSound(loseSound);
       msg = 'I am dead 👻';
       showReplayBtn();
       break;
     case 'replay':
-      replaySound.play();
+      playSound(replaySound);
       msg = 'Wanna replay?';
       showReplayBtn();
       break;
@@ -200,6 +200,15 @@ function showReplayBtn() {
   nextBtn.classList.add('popup__btn--hidden');
 }
 
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function pauseSound(sound) {
+  sound.pause();
+}
+
 function onPlaygroundClick(e) {
   if (!isPlaying) {
     return;
@@ -214,8 +223,7 @@ function onPlaygroundClick(e) {
 }
 
 function onSpinachClick(target) {
-  spinachSound.currentTime = 0;
-  spinachSound.play();
+  playSound(spinachSound);
   target.remove();
   counter--;
   scaleStateImg(spinachNum, counter);

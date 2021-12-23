@@ -1,5 +1,8 @@
 'use strict';
 
+const TIME_LIMIT_IN_SEC = 10;
+const MULTIPLE_FOR_ITEM_NUM = 5;
+
 const infoBtn = document.querySelector('.info__btn');
 const timerText = document.querySelector('.timer__text');
 const timerValue = document.querySelector('.timer__value');
@@ -14,11 +17,9 @@ const replayBtn = document.querySelector('.popup__replay-btn');
 const cancelBtn = document.querySelector('.popup__cancel-btn');
 const instruction = document.querySelector('.instruction');
 
-const timeLimit = 10;
-const multiple = 5;
 let stage = 1;
-let spinachNum = stage * multiple;
-let poisonNum = stage * multiple;
+let spinachNum = stage * MULTIPLE_FOR_ITEM_NUM;
+let poisonNum = stage * MULTIPLE_FOR_ITEM_NUM;
 
 let isPlaying = false;
 let timer;
@@ -38,7 +39,7 @@ addEventListener('load', () => {
   playgroundRect = playground.getBoundingClientRect();
 
   infoBtn.addEventListener('click', () =>
-    !isPlaying ? startGame(timeLimit) : stopGame('replay')
+    !isPlaying ? startGame(TIME_LIMIT_IN_SEC) : stopGame('replay')
   );
 });
 
@@ -235,13 +236,13 @@ function onSpinachClick(target) {
 nextBtn.addEventListener('click', () => {
   updateGameSetting();
   resetGame();
-  startGame(timeLimit);
+  startGame(TIME_LIMIT_IN_SEC);
 });
 
 replayBtn.addEventListener('click', () => {
   resetGameSetting();
   resetGame();
-  startGame(timeLimit);
+  startGame(TIME_LIMIT_IN_SEC);
 });
 
 cancelBtn.addEventListener('click', () => {
@@ -251,12 +252,12 @@ cancelBtn.addEventListener('click', () => {
 });
 
 function updateGameSetting() {
-  spinachNum = poisonNum = ++stage * multiple;
+  spinachNum = poisonNum = ++stage * MULTIPLE_FOR_ITEM_NUM;
 }
 
 function resetGameSetting() {
   stage = 1;
-  spinachNum = poisonNum = stage * multiple;
+  spinachNum = poisonNum = stage * MULTIPLE_FOR_ITEM_NUM;
 }
 
 function resetGame() {

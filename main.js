@@ -1,6 +1,7 @@
 'use strict';
 
 import Instruction from './src/instruction.js';
+import State from './src/state.js';
 
 const TIME_LIMIT_IN_SEC = 10;
 const MULTIPLE_FOR_ITEM_NUM = 5;
@@ -10,8 +11,6 @@ const timerText = document.querySelector('.timer__text');
 const timerValue = document.querySelector('.timer__value');
 const playground = document.querySelector('.game__playground');
 const plate = document.querySelector('.playground__plate');
-const stateImg = document.querySelector('.state__img');
-const statePopeye = document.querySelector('.state__popeye');
 const popup = document.querySelector('.game__popup');
 const popupMsg = document.querySelector('.popup__message');
 const nextBtn = document.querySelector('.popup__next-btn');
@@ -35,6 +34,7 @@ const replaySound = new Audio('sound/replay.wav');
 const bgm = new Audio('sound/bgm.m4a');
 
 const gameInstruction = new Instruction();
+const popeyeState = new State();
 
 // To guarantee correct DOMRect
 addEventListener('load', () => {
@@ -61,7 +61,7 @@ function stopGame(result) {
   isPlaying = false;
   disableInfoBtn();
   stopTimer();
-  updateStateImg(result);
+  popeyeState.update(result);
   showPopupWithMsg(result);
   pauseSound(bgm);
 }
@@ -113,20 +113,6 @@ function stopTimer() {
 
 function initCounter() {
   counter = spinachNum;
-}
-
-function updateStateImg(state) {
-  if (state === 'replay') {
-    return;
-  }
-  statePopeye.setAttribute('src', `image/${state}.png`);
-  statePopeye.setAttribute('alt', `Popeye ${state}`);
-  statePopeye.classList.remove('state__default');
-  statePopeye.removeAttribute('style');
-}
-
-function scaleStateImg(spinachNum, counter) {
-  statePopeye.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
 }
 
 function initPlayground() {
@@ -230,7 +216,7 @@ function onSpinachClick(target) {
   playSound(spinachSound);
   target.remove();
   counter--;
-  scaleStateImg(spinachNum, counter);
+  popeyeState.scale(spinachNum, counter);
   if (counter === 0) {
     stopGame('win');
   }
@@ -266,7 +252,7 @@ function resetGameSetting() {
 function resetGame() {
   resetInfoBtn();
   resetTimer();
-  resetStateImg();
+  popeyeState.reset();
   resetPlayground();
   hidePopup();
 }
@@ -279,12 +265,6 @@ function resetInfoBtn() {
 function resetTimer() {
   timerText.textContent = '00:00';
   timerValue.style.width = '0';
-}
-
-function resetStateImg() {
-  statePopeye.setAttribute('src', 'image/default.png');
-  statePopeye.setAttribute('alt', 'Popeye default');
-  statePopeye.classList.add('state__default');
 }
 
 function resetPlayground() {

@@ -2,6 +2,7 @@
 
 import Instruction from './src/instruction.js';
 import State from './src/state.js';
+import Popup from './src/popup.js';
 
 const TIME_LIMIT_IN_SEC = 10;
 const MULTIPLE_FOR_ITEM_NUM = 5;
@@ -11,11 +12,6 @@ const timerText = document.querySelector('.timer__text');
 const timerValue = document.querySelector('.timer__value');
 const playground = document.querySelector('.game__playground');
 const plate = document.querySelector('.playground__plate');
-const popup = document.querySelector('.game__popup');
-const popupMsg = document.querySelector('.popup__message');
-const nextBtn = document.querySelector('.popup__next-btn');
-const replayBtn = document.querySelector('.popup__replay-btn');
-const cancelBtn = document.querySelector('.popup__cancel-btn');
 
 let stage = 1;
 let spinachNum = stage * MULTIPLE_FOR_ITEM_NUM;
@@ -35,6 +31,25 @@ const bgm = new Audio('sound/bgm.m4a');
 
 const gameInstruction = new Instruction();
 const popeyeState = new State();
+const gameStopPopup = new Popup();
+
+gameStopPopup.setNextClickListener(() => {
+  updateGameSetting();
+  resetGame();
+  startGame(TIME_LIMIT_IN_SEC);
+});
+
+gameStopPopup.setReplayClickListener(() => {
+  resetGameSetting();
+  resetGame();
+  startGame(TIME_LIMIT_IN_SEC);
+});
+
+gameStopPopup.setCancelClickListener(() => {
+  resetGameSetting();
+  resetGame();
+  gameInstruction.show();
+});
 
 // To guarantee correct DOMRect
 addEventListener('load', () => {
@@ -62,7 +77,7 @@ function stopGame(result) {
   disableInfoBtn();
   stopTimer();
   popeyeState.update(result);
-  showPopupWithMsg(result);
+  gameStopPopup.showWithMsg(result, stage);
   pauseSound(bgm);
 }
 
@@ -151,45 +166,6 @@ function random(min, max) {
   return num;
 }
 
-function showPopupWithMsg(result) {
-  let msg;
-  switch (result) {
-    case 'win':
-      playSound(winSound);
-      msg = 'I GOT STRONG 💪';
-      changePopupBtn();
-      break;
-    case 'lose':
-      playSound(loseSound);
-      msg = 'I am dead 👻';
-      showReplayBtn();
-      break;
-    case 'replay':
-      playSound(replaySound);
-      msg = 'Wanna replay?';
-      showReplayBtn();
-      break;
-    default:
-      throw new Error('not handled result');
-  }
-  popupMsg.textContent = msg;
-  popup.classList.remove('game__popup--hidden');
-}
-
-function changePopupBtn() {
-  stage === 1 || stage === 2 ? showNextBtn() : showReplayBtn();
-}
-
-function showNextBtn() {
-  replayBtn.classList.add('popup__btn--hidden');
-  nextBtn.classList.remove('popup__btn--hidden');
-}
-
-function showReplayBtn() {
-  replayBtn.classList.remove('popup__btn--hidden');
-  nextBtn.classList.add('popup__btn--hidden');
-}
-
 function playSound(sound) {
   sound.currentTime = 0;
   sound.play();
@@ -222,24 +198,6 @@ function onSpinachClick(target) {
   }
 }
 
-nextBtn.addEventListener('click', () => {
-  updateGameSetting();
-  resetGame();
-  startGame(TIME_LIMIT_IN_SEC);
-});
-
-replayBtn.addEventListener('click', () => {
-  resetGameSetting();
-  resetGame();
-  startGame(TIME_LIMIT_IN_SEC);
-});
-
-cancelBtn.addEventListener('click', () => {
-  resetGameSetting();
-  resetGame();
-  gameInstruction.show();
-});
-
 function updateGameSetting() {
   spinachNum = poisonNum = ++stage * MULTIPLE_FOR_ITEM_NUM;
 }
@@ -254,7 +212,7 @@ function resetGame() {
   resetTimer();
   popeyeState.reset();
   resetPlayground();
-  hidePopup();
+  gameStopPopup.hide();
 }
 
 function resetInfoBtn() {
@@ -271,8 +229,4 @@ function resetPlayground() {
   playground.innerHTML = `
   <img src="image/plate.png" alt="plate" class="playground__plate" />
   `;
-}
-
-function hidePopup() {
-  popup.classList.add('game__popup--hidden');
 }

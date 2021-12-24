@@ -1,5 +1,7 @@
 'use strict';
 
+import Instruction from './src/instruction.js';
+
 const TIME_LIMIT_IN_SEC = 10;
 const MULTIPLE_FOR_ITEM_NUM = 5;
 
@@ -15,7 +17,6 @@ const popupMsg = document.querySelector('.popup__message');
 const nextBtn = document.querySelector('.popup__next-btn');
 const replayBtn = document.querySelector('.popup__replay-btn');
 const cancelBtn = document.querySelector('.popup__cancel-btn');
-const instruction = document.querySelector('.instruction');
 
 let stage = 1;
 let spinachNum = stage * MULTIPLE_FOR_ITEM_NUM;
@@ -32,6 +33,8 @@ const winSound = new Audio('sound/win.wav');
 const loseSound = new Audio('sound/lose.wav');
 const replaySound = new Audio('sound/replay.wav');
 const bgm = new Audio('sound/bgm.m4a');
+
+const gameInstruction = new Instruction();
 
 // To guarantee correct DOMRect
 addEventListener('load', () => {
@@ -248,7 +251,7 @@ replayBtn.addEventListener('click', () => {
 cancelBtn.addEventListener('click', () => {
   resetGameSetting();
   resetGame();
-  showInstruction();
+  gameInstruction.show();
 });
 
 function updateGameSetting() {
@@ -292,16 +295,4 @@ function resetPlayground() {
 
 function hidePopup() {
   popup.classList.add('game__popup--hidden');
-}
-
-instruction.addEventListener('click', () => {
-  hideInstruction();
-});
-
-function showInstruction() {
-  instruction.classList.remove('instruction--hidden');
-}
-
-function hideInstruction() {
-  instruction.classList.add('instruction--hidden');
 }

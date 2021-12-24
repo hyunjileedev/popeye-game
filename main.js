@@ -4,6 +4,7 @@ import Instruction from './src/instruction.js';
 import State from './src/state.js';
 import Popup from './src/popup.js';
 import Playground from './src/playground.js';
+import * as sound from './src/sound.js';
 
 const TIME_LIMIT_IN_SEC = 10;
 const MULTIPLE_FOR_ITEM_NUM = 1;
@@ -20,12 +21,6 @@ let poisonNum = currentStage * MULTIPLE_FOR_ITEM_NUM;
 let isPlaying = false;
 let timer;
 let counter = spinachNum;
-
-const spinachSound = new Audio('sound/spinach.wav');
-const winSound = new Audio('sound/win.wav');
-const loseSound = new Audio('sound/lose.wav');
-const replaySound = new Audio('sound/replay.wav');
-const bgm = new Audio('sound/bgm.m4a');
 
 const gameInstruction = new Instruction();
 const popeyeState = new State();
@@ -62,7 +57,7 @@ function startGame(timeLimitInSecs) {
   startTimer(timeLimitInSecs);
   initCounter();
   gamePlayground.init(spinachNum, poisonNum);
-  playSound(bgm);
+  sound.playBgm();
 }
 
 function stopGame(result) {
@@ -71,7 +66,7 @@ function stopGame(result) {
   stopTimer();
   popeyeState.update(result);
   gameStopPopup.showWithMsg(result, currentStage, TOTAL_STAGES);
-  pauseSound(bgm);
+  sound.pauseBgm();
 }
 
 function changeInfoBtn(type) {
@@ -123,15 +118,6 @@ function initCounter() {
   counter = spinachNum;
 }
 
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-function pauseSound(sound) {
-  sound.pause();
-}
-
 function onGamePlaygroundClick(e) {
   if (!isPlaying) {
     return;
@@ -146,7 +132,7 @@ function onGamePlaygroundClick(e) {
 }
 
 function onSpinachClick(target) {
-  playSound(spinachSound);
+  sound.playSpinach();
   target.remove();
   counter--;
   popeyeState.scale(spinachNum, counter);

@@ -1,5 +1,7 @@
 'use strict';
 
+import * as sound from './sound.js';
+
 export default class Popup {
   constructor() {
     this.popup = document.querySelector('.game__popup');
@@ -34,17 +36,17 @@ export default class Popup {
     let msg;
     switch (result) {
       case 'win':
-        // playSound(winSound);
+        sound.playWin();
         msg = 'I GOT STRONG 💪';
         this._switchBtn(currentStage, totalStages);
         break;
       case 'lose':
-        // playSound(loseSound);
+        sound.playLose();
         msg = 'I am dead 👻';
         this._showReplayBtn();
         break;
       case 'replay':
-        // playSound(replaySound);
+        sound.playReplay();
         msg = 'Wanna replay?';
         this._showReplayBtn();
         break;

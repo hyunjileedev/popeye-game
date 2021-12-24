@@ -30,13 +30,13 @@ export default class Popup {
     this.onCancelClick = onCancelClick;
   }
 
-  showWithMsg(result, stage) {
+  showWithMsg(result, currentStage, totalStages) {
     let msg;
     switch (result) {
       case 'win':
         // playSound(winSound);
         msg = 'I GOT STRONG 💪';
-        this._switchBtn(stage);
+        this._switchBtn(currentStage, totalStages);
         break;
       case 'lose':
         // playSound(loseSound);
@@ -55,8 +55,8 @@ export default class Popup {
     this.popup.classList.remove('game__popup--hidden');
   }
 
-  _switchBtn = stage => {
-    stage === 1 || stage === 2 ? this._showNextBtn() : this._showReplayBtn();
+  _switchBtn = (currentStage, totalStages) => {
+    currentStage === totalStages ? this._showReplayBtn() : this._showNextBtn();
   };
 
   _showNextBtn = () => {

@@ -5,7 +5,8 @@ import State from './src/state.js';
 import Popup from './src/popup.js';
 
 const TIME_LIMIT_IN_SEC = 10;
-const MULTIPLE_FOR_ITEM_NUM = 5;
+const MULTIPLE_FOR_ITEM_NUM = 1;
+const TOTAL_STAGES = 5;
 
 const infoBtn = document.querySelector('.info__btn');
 const timerText = document.querySelector('.timer__text');
@@ -13,9 +14,9 @@ const timerValue = document.querySelector('.timer__value');
 const playground = document.querySelector('.game__playground');
 const plate = document.querySelector('.playground__plate');
 
-let stage = 1;
-let spinachNum = stage * MULTIPLE_FOR_ITEM_NUM;
-let poisonNum = stage * MULTIPLE_FOR_ITEM_NUM;
+let currentStage = 1;
+let spinachNum = currentStage * MULTIPLE_FOR_ITEM_NUM;
+let poisonNum = currentStage * MULTIPLE_FOR_ITEM_NUM;
 
 let isPlaying = false;
 let timer;
@@ -34,20 +35,17 @@ const popeyeState = new State();
 const gameStopPopup = new Popup();
 
 gameStopPopup.setNextClickListener(() => {
-  updateGameSetting();
-  resetGame();
+  resetGame('next');
   startGame(TIME_LIMIT_IN_SEC);
 });
 
 gameStopPopup.setReplayClickListener(() => {
-  resetGameSetting();
-  resetGame();
+  resetGame('replay');
   startGame(TIME_LIMIT_IN_SEC);
 });
 
 gameStopPopup.setCancelClickListener(() => {
-  resetGameSetting();
-  resetGame();
+  resetGame('cancel');
   gameInstruction.show();
 });
 
@@ -77,7 +75,7 @@ function stopGame(result) {
   disableInfoBtn();
   stopTimer();
   popeyeState.update(result);
-  gameStopPopup.showWithMsg(result, stage);
+  gameStopPopup.showWithMsg(result, currentStage, TOTAL_STAGES);
   pauseSound(bgm);
 }
 
@@ -198,16 +196,14 @@ function onSpinachClick(target) {
   }
 }
 
-function updateGameSetting() {
-  spinachNum = poisonNum = ++stage * MULTIPLE_FOR_ITEM_NUM;
+function updateGameSetting(clickedBtn) {
+  currentStage = clickedBtn === 'next' ? ++currentStage : 1;
+  spinachNum = currentStage * MULTIPLE_FOR_ITEM_NUM;
+  poisonNum = currentStage * MULTIPLE_FOR_ITEM_NUM;
 }
 
-function resetGameSetting() {
-  stage = 1;
-  spinachNum = poisonNum = stage * MULTIPLE_FOR_ITEM_NUM;
-}
-
-function resetGame() {
+function resetGame(clickedBtn) {
+  updateGameSetting(clickedBtn);
   resetInfoBtn();
   resetTimer();
   popeyeState.reset();

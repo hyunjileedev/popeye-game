@@ -16,12 +16,13 @@ export default class State {
     this.popeye.setAttribute('src', `image/${state}.png`);
     this.popeye.setAttribute('alt', `Popeye ${state}`);
     this.popeye.classList.remove('state__default');
-    this.popeye.removeAttribute('style');
+    this.popeye.style.transform = 'none';
   }
 
   reset() {
     this.popeye.setAttribute('src', 'image/default.png');
     this.popeye.setAttribute('alt', 'Popeye default');
     this.popeye.classList.add('state__default');
+    this.popeye.style.transform = 'none';
   }
 }

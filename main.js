@@ -2,7 +2,7 @@
 
 import Instruction from './src/instruction.js';
 import GameBuilder from './src/game.js';
-import Popup from './src/popup.js';
+import { Popup, BtnType } from './src/popup.js';
 
 const gameInstruction = new Instruction();
 const popeyeGame = new GameBuilder()
@@ -15,17 +15,17 @@ const gameStopPopup = new Popup();
 popeyeGame.setStopListener(gameStopPopup.showWithMsg);
 
 gameStopPopup.setNextClickListener(() => {
-  popeyeGame.reset('next');
+  popeyeGame.reset(BtnType.next);
   popeyeGame.start();
 });
 
 gameStopPopup.setReplayClickListener(() => {
-  popeyeGame.reset('replay');
+  popeyeGame.reset(BtnType.stop);
   popeyeGame.start();
 });
 
 gameStopPopup.setCancelClickListener(() => {
-  popeyeGame.reset('cancel');
+  popeyeGame.reset(BtnType.cancel);
   gameInstruction.show();
 });
 

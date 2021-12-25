@@ -1,7 +1,8 @@
 'use strict';
 
-import Playground from './playground.js';
+import { Playground, ItemType } from './playground.js';
 import State from './state.js';
+import { Result, BtnType } from './popup.js';
 import * as sound from './sound.js';
 
 export default class GameBuilder {
@@ -28,6 +29,11 @@ export default class GameBuilder {
     );
   }
 }
+
+const MainBtnType = Object.freeze({
+  play: 'play',
+  stop: 'stop',
+});
 
 class Game {
   constructor(totalStages, multipleForItemNum, timeLimitInSec) {
@@ -61,12 +67,12 @@ class Game {
   }
 
   onMainBtnClick = () => {
-    !this.isPlaying ? this.start() : this.stop('replay');
+    !this.isPlaying ? this.start() : this.stop(Result.replay);
   };
 
   start() {
     this.isPlaying = true;
-    this.switchMainBtn('stop');
+    this.switchMainBtn(MainBtnType.stop);
     this.startTimer(this.timeLimitInSec);
     this.initCounter();
     this.playground.init(this.spinachNum, this.poisonNum);
@@ -112,7 +118,7 @@ class Game {
         if (this.counter <= 0) {
           return;
         }
-        this.stop('lose');
+        this.stop(Result.lose);
       }
     }, 1000);
   }
@@ -137,7 +143,9 @@ class Game {
     if (!this.isPlaying) {
       return;
     }
-    itemName === 'spinach' ? this.onSpinachClick(target) : this.stop('lose');
+    itemName === ItemType.spinach
+      ? this.onSpinachClick(target)
+      : this.stop(Result.lose);
   };
 
   onSpinachClick(target) {
@@ -146,19 +154,19 @@ class Game {
     this.counter--;
     this.popeyeState.scale(this.spinachNum, this.counter);
     if (this.counter <= 0) {
-      this.stop('win');
+      this.stop(Result.win);
     }
   }
 
   updateGameSetting(clickedBtn) {
-    this.currentStage = clickedBtn === 'next' ? ++this.currentStage : 1;
+    this.currentStage = clickedBtn === BtnType.next ? ++this.currentStage : 1;
     this.spinachNum = this.currentStage * this.multipleForItemNum;
     this.poisonNum = this.currentStage * this.multipleForItemNum;
   }
 
   resetMainBtn() {
     this.mainBtn.removeAttribute('disabled');
-    this.switchMainBtn('play');
+    this.switchMainBtn(MainBtnType.play);
   }
 
   resetTimer() {

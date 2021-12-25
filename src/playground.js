@@ -1,6 +1,11 @@
 'use strict';
 
-export default class Playground {
+export const ItemType = Object.freeze({
+  spinach: 'spinach',
+  poison: 'poison',
+});
+
+export class Playground {
   constructor() {
     this.playground = document.querySelector('.game__playground');
     this.playground.addEventListener('click', this.onPlaygroundClick);
@@ -18,9 +23,9 @@ export default class Playground {
   onPlaygroundClick = e => {
     const target = e.target;
     if (target.matches('.spinach')) {
-      this.onItemClick && this.onItemClick('spinach', target);
+      this.onItemClick && this.onItemClick(ItemType.spinach, target);
     } else if (target.matches('.poison')) {
-      this.onItemClick && this.onItemClick('poison', target);
+      this.onItemClick && this.onItemClick(ItemType.poison, target);
     } else {
       return;
     }

@@ -2,7 +2,19 @@
 
 import * as sound from './sound.js';
 
-export default class Popup {
+export const Result = Object.freeze({
+  win: 'win',
+  lose: 'lose',
+  replay: 'replay',
+});
+
+export const BtnType = Object.freeze({
+  next: 'next',
+  replay: 'replay',
+  cancel: 'cancel',
+});
+
+export class Popup {
   constructor() {
     this.popup = document.querySelector('.game__popup');
     this.msg = document.querySelector('.popup__message');
@@ -35,17 +47,17 @@ export default class Popup {
   showWithMsg = (result, currentStage, totalStages) => {
     let msg;
     switch (result) {
-      case 'win':
+      case Result.win:
         sound.playWin();
         msg = 'I GOT STRONG 💪';
         this._switchBtn(currentStage, totalStages);
         break;
-      case 'lose':
+      case Result.lose:
         sound.playLose();
         msg = 'I am dead 👻';
         this._showReplayBtn();
         break;
-      case 'replay':
+      case Result.replay:
         sound.playReplay();
         msg = 'Wanna replay?';
         this._showReplayBtn();

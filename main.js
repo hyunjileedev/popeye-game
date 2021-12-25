@@ -70,19 +70,27 @@ function disableInfoBtn() {
 
 function startTimer(timeLimitInSecs) {
   let remainingSecs = timeLimitInSecs;
-  timerText.textContent = formatTime(remainingSecs);
-  timerValue.style.width = `calc(${remainingSecs} / ${timeLimitInSecs} * 100%)`;
+  updateTimerText(remainingSecs);
+  updateTimerBar(remainingSecs, timeLimitInSecs);
 
   timer = setInterval(() => {
-    timerText.textContent = formatTime(--remainingSecs);
-    timerValue.style.width = `calc(${remainingSecs} / ${timeLimitInSecs} * 100%)`;
-    if (remainingSecs === 0) {
-      clearTimeout(timer);
+    updateTimerText(--remainingSecs);
+    updateTimerBar(remainingSecs, timeLimitInSecs);
+    if (remainingSecs <= 0) {
+      clearInterval(timer);
       if (counter !== 0) {
         stopGame('lose');
       }
     }
   }, 1000);
+}
+
+function updateTimerText(remainingSecs) {
+  timerText.textContent = formatTime(remainingSecs);
+}
+
+function updateTimerBar(remainingSecs, timeLimitInSecs) {
+  timerValue.style.width = `calc(${remainingSecs} / ${timeLimitInSecs} * 100%)`;
 }
 
 function formatTime(timeInSecs) {
@@ -94,7 +102,7 @@ function formatTime(timeInSecs) {
 }
 
 function stopTimer() {
-  clearTimeout(timer);
+  clearInterval(timer);
 }
 
 function initCounter() {

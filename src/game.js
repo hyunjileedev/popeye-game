@@ -4,7 +4,32 @@ import Playground from './playground.js';
 import State from './state.js';
 import * as sound from './sound.js';
 
-export default class Game {
+export default class GameBuilder {
+  withTotalStages(stages) {
+    this.totalStages = stages;
+    return this;
+  }
+
+  withMultipleForItemNum(multiple) {
+    this.multipleForItemNum = multiple;
+    return this;
+  }
+
+  withTimeLimitInSecs(timeLimit) {
+    this.timeLimitInSecs = timeLimit;
+    return this;
+  }
+
+  build() {
+    return new Game(
+      this.totalStages, //
+      this.multipleForItemNum,
+      this.timeLimitInSecs
+    );
+  }
+}
+
+class Game {
   constructor(totalStages, multipleForItemNum, timeLimitInSec) {
     this.totalStages = totalStages;
     this.multipleForItemNum = multipleForItemNum;

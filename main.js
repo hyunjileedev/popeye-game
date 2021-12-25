@@ -1,19 +1,15 @@
 'use strict';
 
 import Instruction from './src/instruction.js';
-import Game from './src/game.js';
+import GameBuilder from './src/game.js';
 import Popup from './src/popup.js';
 
-const TOTAL_STAGES = 5;
-const MULTIPLE_FOR_ITEM_NUM = 1;
-const TIME_LIMIT_IN_SEC = 10;
-
 const gameInstruction = new Instruction();
-const popeyeGame = new Game(
-  TOTAL_STAGES,
-  MULTIPLE_FOR_ITEM_NUM,
-  TIME_LIMIT_IN_SEC
-);
+const popeyeGame = new GameBuilder()
+  .withTotalStages(3)
+  .withMultipleForItemNum(2)
+  .withTimeLimitInSecs(5)
+  .build();
 const gameStopPopup = new Popup();
 
 popeyeGame.setStopListener(gameStopPopup.showWithMsg);

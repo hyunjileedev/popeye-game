@@ -32,7 +32,7 @@ export default class Popup {
     this.onCancelClick = onCancelClick;
   }
 
-  showWithMsg(result, currentStage, totalStages) {
+  showWithMsg = (result, currentStage, totalStages) => {
     let msg;
     switch (result) {
       case 'win':
@@ -55,7 +55,7 @@ export default class Popup {
     }
     this.msg.textContent = msg;
     this.popup.classList.remove('game__popup--hidden');
-  }
+  };
 
   _switchBtn = (currentStage, totalStages) => {
     currentStage === totalStages ? this._showReplayBtn() : this._showNextBtn();
@@ -71,7 +71,7 @@ export default class Popup {
     this.nextBtn.classList.add('popup__btn--hidden');
   };
 
-  hide() {
+  hide = () => {
     this.popup.classList.add('game__popup--hidden');
-  }
+  };
 }

@@ -3,9 +3,7 @@
 export default class Playground {
   constructor() {
     this.playground = document.querySelector('.game__playground');
-    this.playground.addEventListener('click', e => {
-      this.onPlaygroundClick && this.onPlaygroundClick(e);
-    });
+    this.playground.addEventListener('click', this.onPlaygroundClick);
     this.plate = document.querySelector('.playground__plate');
     window.addEventListener('load', () => {
       this.plateRect = this.plate.getBoundingClientRect();
@@ -13,9 +11,20 @@ export default class Playground {
     });
   }
 
-  setClickListener(onPlaygroundClick) {
-    this.onPlaygroundClick = onPlaygroundClick;
+  setItemClickListener(onItemClick) {
+    this.onItemClick = onItemClick;
   }
+
+  onPlaygroundClick = e => {
+    const target = e.target;
+    if (target.matches('.spinach')) {
+      this.onItemClick && this.onItemClick('spinach', target);
+    } else if (target.matches('.poison')) {
+      this.onItemClick && this.onItemClick('poison', target);
+    } else {
+      return;
+    }
+  };
 
   init(spinachNum, poisonNum) {
     this._displayItems('spinach', spinachNum);

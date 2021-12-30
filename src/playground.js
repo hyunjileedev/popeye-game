@@ -32,8 +32,8 @@ export class Playground {
   };
 
   init(spinachNum, poisonNum) {
-    this._displayItems('spinach', spinachNum);
-    this._displayItems('poison', poisonNum);
+    this._displayItems(ItemType.spinach, spinachNum);
+    this._displayItems(ItemType.poison, poisonNum);
   }
 
   _displayItems(itemName, itemNum) {

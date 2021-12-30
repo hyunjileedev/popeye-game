@@ -26,18 +26,21 @@
 
 - 시금치를 클릭할 때마다 뽀빠이가 점점 커짐
 - 시금치를 모두 먹으면 엄지척하는 뽀빠이가 나타남
-  ![win](https://user-images.githubusercontent.com/79075688/147724290-f948600f-a486-4cd1-86e9-a9726dca5db6.gif)
+
+![win](https://user-images.githubusercontent.com/79075688/147724290-f948600f-a486-4cd1-86e9-a9726dca5db6.gif)
 
 ### 게임 패배
 
 - 독약을 클릭하면 뽀빠이가 죽음
 - 시간을 초과해도 뽀빠이가 죽음
-  ![lose](https://user-images.githubusercontent.com/79075688/147724286-571e9b6e-d23e-48b9-81f3-fdb0f8ab3b7d.gif)
+
+![lose](https://user-images.githubusercontent.com/79075688/147724286-571e9b6e-d23e-48b9-81f3-fdb0f8ab3b7d.gif)
 
 ### 레벨 업
 
 - 게임에서 승리하고 다음 단계로 넘어가면 시금치와 독약의 개수가 늘어남
-  ![stage](https://user-images.githubusercontent.com/79075688/147724275-200e62fd-3210-4c33-b601-a863728328c0.gif)
+
+![stage](https://user-images.githubusercontent.com/79075688/147724275-200e62fd-3210-4c33-b601-a863728328c0.gif)
 
 ## 📝 새롭게 배운 점
 

@@ -7,8 +7,8 @@ import { Popup, BtnType } from './src/popup.js';
 const gameInstruction = new Instruction();
 const popeyeGame = new GameBuilder()
   .withTotalStages(3)
-  .withMultipleForItemNum(2)
-  .withTimeLimitInSecs(5)
+  .withMultipleForItemNum(5)
+  .withTimeLimitInSecs(10)
   .build();
 const gameStopPopup = new Popup();
 

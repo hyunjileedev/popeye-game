@@ -2,10 +2,10 @@
 
 import { Playground, ItemType } from './playground.js';
 import State from './state.js';
-import { Result, BtnType } from './popup.js';
+import { BtnType } from './popup.js';
 import * as sound from './sound.js';
 
-export default class GameBuilder {
+export class GameBuilder {
   withTotalStages(stages) {
     this.totalStages = stages;
     return this;
@@ -29,6 +29,12 @@ export default class GameBuilder {
     );
   }
 }
+
+export const Result = Object.freeze({
+  win: 'win',
+  lose: 'lose',
+  replay: 'replay',
+});
 
 const MainBtnType = Object.freeze({
   play: 'play',

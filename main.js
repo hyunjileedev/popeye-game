@@ -1,7 +1,7 @@
 'use strict';
 
 import Instruction from './src/instruction.js';
-import GameBuilder from './src/game.js';
+import { GameBuilder } from './src/game.js';
 import { Popup, BtnType } from './src/popup.js';
 
 const gameInstruction = new Instruction();

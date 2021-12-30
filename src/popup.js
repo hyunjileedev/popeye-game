@@ -1,12 +1,7 @@
 'use strict';
 
+import { Result } from './game.js';
 import * as sound from './sound.js';
-
-export const Result = Object.freeze({
-  win: 'win',
-  lose: 'lose',
-  replay: 'replay',
-});
 
 export const BtnType = Object.freeze({
   next: 'next',

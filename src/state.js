@@ -1,5 +1,7 @@
 'use strict';
 
+import { Result } from './game.js';
+
 export default class State {
   constructor() {
     this.popeye = document.querySelector('.state__popeye');
@@ -9,12 +11,12 @@ export default class State {
     this.popeye.style.transform = `scale(calc(1 + (${spinachNum} - ${counter}) / ${spinachNum}))`;
   }
 
-  update(state) {
-    if (state === 'replay') {
+  update(result) {
+    if (result === Result.replay) {
       return;
     }
-    this.popeye.setAttribute('src', `image/${state}.png`);
-    this.popeye.setAttribute('alt', `Popeye ${state}`);
+    this.popeye.setAttribute('src', `image/${result}.png`);
+    this.popeye.setAttribute('alt', `Popeye ${result}`);
     this.popeye.classList.remove('state__default');
     this.popeye.style.transform = 'none';
   }

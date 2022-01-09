@@ -32,18 +32,18 @@ export class Playground {
   };
 
   init(spinachNum, poisonNum) {
-    this._displayItems(ItemType.spinach, spinachNum);
-    this._displayItems(ItemType.poison, poisonNum);
+    this.#displayItems(ItemType.spinach, spinachNum);
+    this.#displayItems(ItemType.poison, poisonNum);
   }
 
-  _displayItems(itemName, itemNum) {
+  #displayItems(itemName, itemNum) {
     for (let i = 0; i < itemNum; i++) {
-      const item = this._createItem(itemName);
+      const item = this.#createItem(itemName);
       this.playground.appendChild(item);
     }
   }
 
-  _createItem(itemName) {
+  #createItem(itemName) {
     const x = random(
       this.plateRect.left - this.playgroundRect.left,
       this.plateRect.right - this.playgroundRect.left - 50

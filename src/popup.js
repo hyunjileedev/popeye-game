@@ -45,17 +45,17 @@ export class Popup {
       case Result.win:
         sound.playWin();
         msg = 'I GOT STRONG 💪';
-        this._switchBtn(currentStage, totalStages);
+        this.#switchBtn(currentStage, totalStages);
         break;
       case Result.lose:
         sound.playLose();
         msg = 'I am dead 👻';
-        this._showReplayBtn();
+        this.#showReplayBtn();
         break;
       case Result.replay:
         sound.playReplay();
         msg = 'Wanna replay?';
-        this._showReplayBtn();
+        this.#showReplayBtn();
         break;
       default:
         throw new Error('not handled result');
@@ -64,16 +64,16 @@ export class Popup {
     this.popup.classList.remove('game__popup--hidden');
   };
 
-  _switchBtn = (currentStage, totalStages) => {
-    currentStage === totalStages ? this._showReplayBtn() : this._showNextBtn();
+  #switchBtn = (currentStage, totalStages) => {
+    currentStage === totalStages ? this.#showReplayBtn() : this.#showNextBtn();
   };
 
-  _showNextBtn = () => {
+  #showNextBtn = () => {
     this.replayBtn.classList.add('popup__btn--hidden');
     this.nextBtn.classList.remove('popup__btn--hidden');
   };
 
-  _showReplayBtn = () => {
+  #showReplayBtn = () => {
     this.replayBtn.classList.remove('popup__btn--hidden');
     this.nextBtn.classList.add('popup__btn--hidden');
   };
